@@ -10,7 +10,7 @@ window.onload = function () {
         ],
 
         SPRING_CONSTANT = 0.08,
-        PUSH_FORCE = 5,
+        PUSH_FORCE = 15,
         SPHERE_RADIUS = 17,
         SPHERE_FRICTION = 0.85,
 
@@ -58,7 +58,8 @@ window.onload = function () {
         if (mouseIsDown) {
             var force = vector.create(sphere.position.getX() - mouseX, sphere.position.getY() - mouseY);
             var unitForce = force.divide(force.getLength());
-            var realForce = unitForce.multiply(PUSH_FORCE);
+            var touchDistance = sphere.distanceTo(particle.create(mouseX, mouseY, 0, Math.random(), 0)) / 100;
+            var realForce = unitForce.multiply(PUSH_FORCE / (touchDistance*touchDistance));
             sphere.velocity.addTo(realForce);
         }
 
